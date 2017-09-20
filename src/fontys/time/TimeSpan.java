@@ -97,7 +97,7 @@ public class TimeSpan implements ITimeSpan {
         if (bt.compareTo(timeSpan.getEndTime()) <= 0 || et.compareTo(timeSpan.getBeginTime()) >= 0) {
             return null;
         }
-        
+
         ITime begintime, endtime;
         if (bt.compareTo(timeSpan.getBeginTime()) < 0) {
             begintime = bt;
@@ -118,6 +118,10 @@ public class TimeSpan implements ITimeSpan {
     @Override
     public ITimeSpan intersectionWith(ITimeSpan timeSpan) {
 
+        if (bt.compareTo(timeSpan.getEndTime()) < 0 || timeSpan.getBeginTime().compareTo(et) < 0) {
+            return null;
+        }
+
         ITime begintime, endtime;
         if (bt.compareTo(timeSpan.getBeginTime()) > 0) {
             begintime = bt;
@@ -129,10 +133,6 @@ public class TimeSpan implements ITimeSpan {
             endtime = et;
         } else {
             endtime = timeSpan.getEndTime();
-        }
-
-        if (begintime.compareTo(endtime) < 0) {
-            return null;
         }
 
         return new TimeSpan(begintime, endtime);

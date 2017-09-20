@@ -1,9 +1,5 @@
-package fontys.time.test;
+package fontys.time;
 
-import fontys.time.ITime;
-import fontys.time.ITimeSpan;
-import fontys.time.Time;
-import fontys.time.TimeSpan;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,6 +16,12 @@ public class TimeSpanTest {
         t1 = new Time(1995, 3, 31, 15, 45);
         t2 = new Time(2017, 4, 1, 15, 45);
         ts = new TimeSpan(t1, t2);
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void illegalArgumentConstructor() {
+        new TimeSpan(t2, t1);
     }
 
     @Test
@@ -78,8 +80,20 @@ public class TimeSpanTest {
     }
 
     @Test
-    public void move() throws Exception {
+    public void move_positive() throws Exception {
         int moveMin = 5;
+        int beginMinutes = ts.getBeginTime().getMinutes();
+        int endMinutes = ts.getEndTime().getMinutes();
+        ts.move(moveMin);
+
+        assertEquals(beginMinutes  + moveMin, ts.getBeginTime().getMinutes());
+        assertEquals(endMinutes + moveMin, ts.getEndTime().getMinutes());
+    }
+
+
+    @Test
+    public void move_negative() throws Exception {
+        int moveMin = -5;
         int beginMinutes = ts.getBeginTime().getMinutes();
         int endMinutes = ts.getEndTime().getMinutes();
         ts.move(moveMin);
@@ -95,6 +109,14 @@ public class TimeSpanTest {
         ts.changeLengthWith(moveMin);
 
         assertEquals(endMinutes + moveMin, ts.getEndTime().getMinutes());
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void changeLengthWith_IllegalArgument() throws Exception {
+        int moveMin = -5;
+        int endMinutes = ts.getEndTime().getMinutes();
+        ts.changeLengthWith(moveMin);
     }
 
     @Test
@@ -115,13 +137,45 @@ public class TimeSpanTest {
     }
 
     @Test
-    public void unionWith() throws Exception {
+    public void unionWith_Begin() throws Exception {
         TimeSpan span =  new TimeSpan(
                 new Time(1990, 1, 1, 1, 1),
                 new Time(1995, 3, 31, 15, 50));
         ITimeSpan newSpan = ts.unionWith(span);
 
         assertEquals(5, newSpan.length());
+    }
+
+    @Test
+    public void unionWith_End() throws Exception {
+        TimeSpan span =  new TimeSpan(
+                new Time(2017, 4, 1, 15, 40),
+                new Time(2020, 3, 31, 15, 50));
+        ITimeSpan newSpan = ts.unionWith(span);
+
+        assertEquals(5, newSpan.length());
+    }
+
+    @Test
+    public void unionWith_spanWithinTs() throws Exception {
+        TimeSpan span =  new TimeSpan(
+                new Time(1995, 3, 31, 15, 50),
+
+                new Time(2017, 4, 1, 15, 40));
+        ITimeSpan newSpan = ts.unionWith(span);
+
+        assertEquals(span.length(), newSpan.length());
+    }
+
+    @Test
+    public void unionWith_TsWithinSpan() throws Exception {
+        TimeSpan span =  new TimeSpan(
+                new Time(1990, 3, 31, 15, 50),
+
+                new Time(2020, 4, 1, 15, 40));
+        ITimeSpan newSpan = ts.unionWith(span);
+
+        assertEquals(ts.length(), newSpan.length());
     }
 
     @Test
@@ -135,13 +189,23 @@ public class TimeSpanTest {
     }
 
     @Test
-    public void intersectionWith() throws Exception {
+    public void intersectionWith_TestWithinNew() throws Exception {
         TimeSpan span =  new TimeSpan(
                 new Time(1995, 3, 31, 15, 10),
                 new Time(2017, 4, 1, 15, 55));
         ITimeSpan newSpan = ts.intersectionWith(span);
 
         assertEquals(span.length(), newSpan.length());
+    }
+
+    @Test
+    public void intersectionWith_NewWithinTest() throws Exception {
+        TimeSpan span =  new TimeSpan(
+                new Time(1997, 3, 31, 15, 10),
+                new Time(2016, 4, 1, 15, 55));
+        ITimeSpan newSpan = ts.intersectionWith(span);
+
+        assertEquals(ts.length(), newSpan.length());
     }
 
     @Test

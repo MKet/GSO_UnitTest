@@ -1,4 +1,4 @@
-package fontys.time.test;
+package fontys.time;
 
 import fontys.time.DayInWeek;
 import fontys.time.Time;
