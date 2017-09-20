@@ -15,7 +15,11 @@ import java.util.GregorianCalendar;
  */
 public class Time implements ITime {
 
+<<<<<<< HEAD
     private GregorianCalendar gc = (GregorianCalendar) GregorianCalendar.getInstance();
+=======
+    private GregorianCalendar gc;
+>>>>>>> 5a5305d0f392dd73ba7dfa0fc1880d7b5b6f38a9
 
     /**
      * creation of a time-object with year y, month m, day d, hours h and
@@ -41,7 +45,11 @@ public class Time implements ITime {
             throw new IllegalArgumentException("minutes must be within 0..59");
         }
         
+<<<<<<< HEAD
         gc = new GregorianCalendar(y, m -1 , d , h, min);
+=======
+        gc = new GregorianCalendar(y, m , d, h, min);
+>>>>>>> 5a5305d0f392dd73ba7dfa0fc1880d7b5b6f38a9
     }
 
     Time(Time t) {
@@ -112,6 +120,10 @@ public class Time implements ITime {
     @Override
     public int difference(ITime time) {
         Time t = (Time) time;
+<<<<<<< HEAD
         return (int) ((this.gc.getTimeInMillis() - t.gc.getTimeInMillis()) / 60000);
+=======
+        return (int) ((this.gc.getTimeInMillis() - t.gc.getTimeInMillis()) / 600000);
+>>>>>>> 5a5305d0f392dd73ba7dfa0fc1880d7b5b6f38a9
     }
 }

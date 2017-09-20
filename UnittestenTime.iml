@@ -18,6 +18,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+<<<<<<< HEAD
       <library name="JUnit5">
         <CLASSES>
           <root url="jar://$APPLICATION_HOME_DIR$/plugins/junit/lib/junit-jupiter-api-5.0.0-M6.jar!/" />
@@ -28,6 +29,8 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+=======
+>>>>>>> 5a5305d0f392dd73ba7dfa0fc1880d7b5b6f38a9
       <library>
         <CLASSES>
           <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.12.jar!/" />
