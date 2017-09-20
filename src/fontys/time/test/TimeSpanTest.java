@@ -34,7 +34,7 @@ public class TimeSpanTest {
 
     @Test
     public void length() throws Exception {
-        assertEquals(115732800, ts.length());
+        assertEquals(11573280, ts.length());
     }
 
     @Test
@@ -54,13 +54,27 @@ public class TimeSpanTest {
         assertTrue(ts.getBeginTime() != t1 && ts.getBeginTime() == newTime);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void setBeginTimeHigherThanEndTime() throws Exception {
+        ITime newTime = new Time(2020, 3, 31, 15, 45);
+
+        ts.setBeginTime(newTime);
+    }
+
     @Test
     public void setEndTime() throws Exception {
         ITime newTime = new Time(2018, 3, 31, 15, 45);
 
         ts.setEndTime(newTime);
 
-        assertTrue(ts.getEndTime() != t1 && ts.getEndTime() == newTime);
+        assertEquals(ts.getEndTime(), newTime);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setEndTimeLowerthanBeginTime() throws Exception {
+        ITime newTime = new Time(1980, 3, 31, 15, 45);
+
+        ts.setEndTime(newTime);
     }
 
     @Test
@@ -70,8 +84,8 @@ public class TimeSpanTest {
         int endMinutes = ts.getEndTime().getMinutes();
         ts.move(moveMin);
 
-        assertEquals(beginMinutes, ts.getBeginTime().getMinutes() + moveMin);
-        assertEquals(endMinutes, ts.getEndTime().getMinutes() + moveMin);
+        assertEquals(beginMinutes  + moveMin, ts.getBeginTime().getMinutes());
+        assertEquals(endMinutes + moveMin, ts.getEndTime().getMinutes());
     }
 
     @Test
@@ -80,7 +94,7 @@ public class TimeSpanTest {
         int endMinutes = ts.getEndTime().getMinutes();
         ts.changeLengthWith(moveMin);
 
-        assertEquals(endMinutes, ts.getEndTime().getMinutes() + moveMin);
+        assertEquals(endMinutes + moveMin, ts.getEndTime().getMinutes());
     }
 
     @Test
@@ -111,7 +125,7 @@ public class TimeSpanTest {
     }
 
     @Test
-    public void unionWithNoUnion() throws Exception {
+    public void unionWith_NoUnion() throws Exception {
         TimeSpan span =  new TimeSpan(
                 new Time(1990, 1, 1, 1, 1),
                 new Time(1990, 3, 31, 15, 50));
@@ -128,6 +142,16 @@ public class TimeSpanTest {
         ITimeSpan newSpan = ts.intersectionWith(span);
 
         assertEquals(span.length(), newSpan.length());
+    }
+
+    @Test
+    public void intersectionWith_NoIntersection() throws Exception {
+        TimeSpan span =  new TimeSpan(
+                new Time(1990, 1, 1, 1, 1),
+                new Time(1990, 3, 31, 15, 50));
+        ITimeSpan newSpan = ts.intersectionWith(span);
+
+        assertEquals(null, newSpan);
     }
 
 }
