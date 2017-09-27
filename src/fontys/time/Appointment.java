@@ -33,7 +33,7 @@ public class Appointment {
      * @return Whether addition of contact succeeded
      */
     public boolean addContact(Contact contact) {
-        if (!agenda.contains(contact))
+        if (agenda.contains(contact))
             return false;
         for (Contact con : agenda) {
             Iterator<Appointment> iterator =  con.appointments();
@@ -41,7 +41,7 @@ public class Appointment {
             while (iterator.hasNext()) {
                 point = iterator.next();
 
-                if (point.span.isPartOf(span))
+                if (point.span.unionWith(span) != null)
                     return false;
             }
         }
@@ -55,7 +55,7 @@ public class Appointment {
      * @param contact the contact that is to be removed
      */
     public void removeContact(Contact contact) {
-        throw new UnsupportedOperationException();
+       agenda.remove(contact);
     }
 
     /**
@@ -63,7 +63,7 @@ public class Appointment {
      * @return iterator of invitees
      */
     public Iterator<Contact> invitees() {
-        throw new UnsupportedOperationException();
+        return agenda.iterator();
     }
 
     /**
@@ -71,7 +71,7 @@ public class Appointment {
      * @return subject of this appointment
      */
     public String getSubject() {
-        throw new UnsupportedOperationException();
+        return subject;
     }
 
     /**
@@ -79,6 +79,6 @@ public class Appointment {
      * @return timSpan
      */
     public ITimeSpan getTimeSpan() {
-        throw new UnsupportedOperationException();
+        return span;
     }
 }

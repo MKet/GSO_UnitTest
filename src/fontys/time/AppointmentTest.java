@@ -28,18 +28,16 @@ public class AppointmentTest {
     public void addConflictContact() {
         Contact contact = new Contact("Rick");
 
-
         TimeSpan span = new TimeSpan(new Time(1995, 3, 31, 15, 35), new Time(2000, 3, 5, 13, 30));
+        contact.addAppointment(new Appointment(null, span));
 
-        assertFalse(contact.addAppointment(new Appointment(null, span)));
-
+        assertFalse(appointment.addContact(contact));
     }
 
 
     @Test
     public void addContactTwice() {
         Contact contact = new Contact("Rick");
-
 
         assertTrue(appointment.addContact(contact));
         assertTrue(appointment.invitees().hasNext());
