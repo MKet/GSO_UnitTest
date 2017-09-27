@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * @Author Sven
+ */
+
 public class Contact {
 
     private String name;
@@ -40,16 +44,30 @@ public class Contact {
      * @return a true if appointment is successfully created
      * @return a false if appointment was failed to create
      */
-    boolean addAppointment(Appointment a) throws Exception{
+    boolean addAppointment(Appointment a){
 
+        if(a == null){
+            throw new IllegalArgumentException();
+        }
+
+        if(this.appointments.contains(a)){
+            throw new IllegalArgumentException("Contains appointment" + a +" already");
+        }else{
+            appointments.add(a);
+            return true;
+        }
     }
 
     /**
      * Remove an appointment
      * @param a
      */
-    void removeAppointment(Appointment a){
-        boolean result = false;
+    void removeAppointment(Appointment a) throws Exception {
+        if(appointments.contains(a)){
+            appointments.remove(a);
+        }else{
+            throw  new Exception("Does not contain " + a + " appointment");
+        }
     }
 
     /**
