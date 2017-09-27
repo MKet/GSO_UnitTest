@@ -35,6 +35,17 @@ public class AppointmentTest {
 
     }
 
+
+    @Test
+    public void addContactTwice() {
+        Contact contact = new Contact("Rick");
+
+
+        assertTrue(appointment.addContact(contact));
+        assertTrue(appointment.invitees().hasNext());
+        assertFalse(appointment.addContact(contact));
+    }
+
     @Test
     public void removeContact() {
         Contact contact = new Contact("Rick");

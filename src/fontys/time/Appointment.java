@@ -9,12 +9,21 @@ import java.util.List;
  */
 public class Appointment {
 
+    private ArrayList<Contact> agenda;
+    private String subject;
+    private TimeSpan span;
+
     /**
      * Constructs appointment object with following parameters
      * @param subject subject of the appointment
      * @param span timeSpan of the appointment
      */
-    public Appointment(String subject, TimeSpan span) { }
+    public Appointment(String subject, TimeSpan span) {
+        this.subject = subject;
+        this.span = span;
+
+        agenda = new ArrayList<>();
+    }
 
     /**
      * adds a contact to the appointment
@@ -24,7 +33,20 @@ public class Appointment {
      * @return Whether addition of contact succeeded
      */
     public boolean addContact(Contact contact) {
-        throw new UnsupportedOperationException();
+        if (!agenda.contains(contact))
+            return false;
+        for (Contact con : agenda) {
+            Iterator<Appointment> iterator =  con.appointments();
+            Appointment point;
+            while (iterator.hasNext()) {
+                point = iterator.next();
+
+                if (point.span.isPartOf(span))
+                    return false;
+            }
+        }
+        agenda.add(contact);
+        return true;
     }
 
     /**
