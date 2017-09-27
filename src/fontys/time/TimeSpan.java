@@ -6,7 +6,7 @@ package fontys.time;
 
 /**
  *
- * @author Frank Peeters, Nico Kuijpers
+ * @author Frank Peeters, Nico Kuijpers, Sven
  * 
  * LET OP: De klasse TimeSpan bevat enkele fouten.
  * 

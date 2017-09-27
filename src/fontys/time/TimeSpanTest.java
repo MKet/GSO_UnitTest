@@ -5,6 +5,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * @author Marco
+ */
 public class TimeSpanTest {
 
     private TimeSpan ts;

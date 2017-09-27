@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.Assert.assertEquals;
 
 
+/**
+ * @author Sven
+ */
 public class TimeTest {
 
     private Time time = new Time(1996, 12,11,4,30);
