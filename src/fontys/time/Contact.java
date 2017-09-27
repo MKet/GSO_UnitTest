@@ -22,7 +22,7 @@ public class Contact {
         this.appointments = new ArrayList<Appointment>();
         if(name.isEmpty() || name == null){
             try{
-                throw new Exception("name is empty");
+                throw new IllegalArgumentException("name is empty");
             }catch(Exception ex){
                 System.out.println(ex);
             }
@@ -45,7 +45,6 @@ public class Contact {
      * @return a false if appointment was failed to create
      */
     boolean addAppointment(Appointment a){
-
         if(a == null){
             throw new IllegalArgumentException();
         }
@@ -63,6 +62,9 @@ public class Contact {
      * @param a
      */
     void removeAppointment(Appointment a) throws Exception {
+
+
+
         if(appointments.contains(a)){
             appointments.remove(a);
         }else{
