@@ -20,8 +20,7 @@ public class AppointmentTest {
 
     @Test
     public void addContact() {
-        appointment.addContact( new Contact("Rick"));
-
+        assertTrue(appointment.addContact( new Contact("Rick")));
         assertTrue(appointment.invitees().hasNext());
     }
 
@@ -32,11 +31,8 @@ public class AppointmentTest {
 
         TimeSpan span = new TimeSpan(new Time(1995, 3, 31, 15, 35), new Time(2000, 3, 5, 13, 30));
 
-        contact.addAppointment(new Appointment(null, span));
+        assertFalse(contact.addAppointment(new Appointment(null, span)));
 
-        appointment.addContact(contact);
-
-        assertTrue(appointment.invitees().hasNext());
     }
 
     @Test
