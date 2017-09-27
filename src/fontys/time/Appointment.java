@@ -35,16 +35,15 @@ public class Appointment {
     public boolean addContact(Contact contact) {
         if (agenda.contains(contact))
             return false;
-        for (Contact con : agenda) {
-            Iterator<Appointment> iterator =  con.appointments();
-            Appointment point;
-            while (iterator.hasNext()) {
-                point = iterator.next();
 
-                if (point.span.unionWith(span) != null)
-                    return false;
-            }
+        Iterator<Appointment> iterator =  contact.appointments();
+        Appointment point;
+        while (iterator.hasNext()) {
+             point = iterator.next();
+
+             if (point.span.unionWith(span) != null) return false;
         }
+
         agenda.add(contact);
         return true;
     }

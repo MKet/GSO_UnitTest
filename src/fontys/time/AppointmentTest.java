@@ -11,10 +11,11 @@ import static org.junit.Assert.*;
 public class AppointmentTest {
 
     Appointment appointment;
+    TimeSpan span;
 
     @Before
     public void setup() {
-        TimeSpan span = new TimeSpan(new Time(1995, 3, 31, 15, 35), new Time(2117, 3, 5, 13, 30));
+        span = new TimeSpan(new Time(1995, 3, 31, 15, 35), new Time(2117, 3, 5, 13, 30));
         appointment = new Appointment("git gud", span);
     }
 
@@ -59,5 +60,10 @@ public class AppointmentTest {
     @Test
     public void getSubject() {
         assertEquals("git gud", appointment.getSubject());
+    }
+
+    @Test
+    public void getSpan() {
+        assertEquals(span, appointment.getTimeSpan());
     }
 }
