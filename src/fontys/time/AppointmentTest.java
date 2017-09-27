@@ -31,6 +31,9 @@ public class AppointmentTest {
         TimeSpan span = new TimeSpan(new Time(1995, 3, 31, 15, 35), new Time(2000, 3, 5, 13, 30));
         contact.addAppointment(new Appointment(null, span));
 
+        span = new TimeSpan(new Time(1998, 3, 31, 15, 35), new Time(2004, 7, 5, 13, 30));
+        contact.addAppointment(new Appointment(null, span));
+
         assertFalse(appointment.addContact(contact));
     }
 
