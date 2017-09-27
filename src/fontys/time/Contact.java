@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * @Author Sven
+ */
+
 public class Contact {
 
     private String name;
@@ -42,14 +46,28 @@ public class Contact {
      */
     boolean addAppointment(Appointment a) throws Exception{
 
+        if(a == null){
+            throw new IllegalArgumentException();
+        }
+
+        if(this.appointments.contains(a)){
+            throw new Exception("Contains appointment" + a +" already");
+        }else{
+            appointments.add(a);
+            return true;
+        }
     }
 
     /**
      * Remove an appointment
      * @param a
      */
-    void removeAppointment(Appointment a){
-        boolean result = false;
+    void removeAppointment(Appointment a) throws Exception {
+        if(appointments.contains(a)){
+            appointments.remove(a);
+        }else{
+            throw  new Exception("Does not contain " + a + " appointment");
+        }
     }
 
     /**
