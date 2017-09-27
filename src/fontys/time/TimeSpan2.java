@@ -1,39 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package fontys.time;
 
-/**
- *
- * @author Frank Peeters, Nico Kuijpers, Marco
- * 
- * LET OP: De klasse TimeSpan bevat enkele fouten.
- * 
- */
-public class TimeSpan implements ITimeSpan {
+public class TimeSpan2 implements ITimeSpan {
 
-    /* class invariant: 
-     * A stretch of time with a begin time and end time.
-     * The end time is always later then the begin time; the length of the time span is
-     * always positive
-     * 
-     */
-    private ITime bt, et;
-    
-    /**
-     * 
-     * @param bt must be earlier than et
-     * @param et 
-     */
-    public TimeSpan(ITime bt, ITime et) {
+    private ITime bt;
+    private long duration;
+
+    public TimeSpan2(ITime bt, ITime et) {
         if (bt.compareTo(et) <= 0) {
             throw new IllegalArgumentException("begin time "
                     + bt + " must be earlier than end time " + et);
         }
 
         this.bt = bt;
-        this.et = et;
+        this.duration = et.difference(bt);
     }
 
     @Override
@@ -43,16 +22,20 @@ public class TimeSpan implements ITimeSpan {
 
     @Override
     public ITime getEndTime() {
+        ITime et = bt;
+        et.plus((int)duration);
         return et;
     }
 
     @Override
     public int length() {
-        return et.difference(bt);
+        return (int)duration;
     }
 
     @Override
     public void setBeginTime(ITime beginTime) {
+        ITime et = bt;
+        et.plus((int)duration);
         if (beginTime.compareTo(et) < 0) {
             throw new IllegalArgumentException("begin time "
                     + bt + " must be earlier than end time " + et);
@@ -63,18 +46,19 @@ public class TimeSpan implements ITimeSpan {
 
     @Override
     public void setEndTime(ITime endTime) {
+        ITime et = bt;
         if (endTime.compareTo(bt) > 0) {
             throw new IllegalArgumentException("end time "
                     + et + " must be later then begin time " + bt);
         }
 
-        et = endTime;
+        duration = endTime.difference(bt);
     }
 
     @Override
     public void move(int minutes) {
+        duration += minutes;
         bt = bt.plus(minutes);
-        et = et.plus(minutes);
     }
 
     @Override
@@ -82,8 +66,7 @@ public class TimeSpan implements ITimeSpan {
         if (minutes <= 0) {
             throw new IllegalArgumentException("length of period must be positive");
         }
-        
-        et = et.plus(minutes);
+        duration += minutes;
     }
 
     @Override
@@ -94,6 +77,8 @@ public class TimeSpan implements ITimeSpan {
 
     @Override
     public ITimeSpan unionWith(ITimeSpan timeSpan) {
+        ITime et = bt;
+        et.plus((int)duration);
         if (bt.compareTo(timeSpan.getEndTime()) <= 0 || et.compareTo(timeSpan.getBeginTime()) >= 0) {
             return null;
         }
@@ -112,12 +97,12 @@ public class TimeSpan implements ITimeSpan {
         }
 
         return new TimeSpan(begintime, endtime);
-
     }
 
     @Override
     public ITimeSpan intersectionWith(ITimeSpan timeSpan) {
-
+        ITime et = bt;
+        et.plus((int)duration);
         if (bt.compareTo(timeSpan.getEndTime()) < 0 || timeSpan.getBeginTime().compareTo(et) < 0) {
             return null;
         }

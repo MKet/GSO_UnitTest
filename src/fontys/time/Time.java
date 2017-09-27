@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 
 /**
  *
- * @author Frank Peeters, Nico Kuijpers, Marco
+ * @author Frank Peeters, Nico Kuijpers, Sven
  * 
  * LET OP: De klasse Time bevat enkele fouten.
  * 
