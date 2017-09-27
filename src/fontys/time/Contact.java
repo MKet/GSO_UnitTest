@@ -44,14 +44,14 @@ public class Contact {
      * @return a true if appointment is successfully created
      * @return a false if appointment was failed to create
      */
-    boolean addAppointment(Appointment a) throws Exception{
+    boolean addAppointment(Appointment a){
 
         if(a == null){
             throw new IllegalArgumentException();
         }
 
         if(this.appointments.contains(a)){
-            throw new Exception("Contains appointment" + a +" already");
+            throw new IllegalArgumentException("Contains appointment" + a +" already");
         }else{
             appointments.add(a);
             return true;
